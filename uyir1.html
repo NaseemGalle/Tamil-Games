@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+  <meta charset="UTF-8">
+  <title>உயிர் எழுத்துக்கள் - ගේම්</title>
+  <style>
+    body {
+      font-family: 'Noto Sans Tamil', Arial, sans-serif;
+      text-align: center;
+      background: #f9f9f9;
+      padding: 20px;
+    }
+    h1 {
+      background: #4caf50;
+      color: white;
+      padding: 15px;
+      border-radius: 10px;
+    }
+    #letter {
+      font-size: 80px;
+      margin: 30px 0;
+      color: #3f51b5;
+    }
+    .options {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      max-width: 500px;
+      margin: auto;
+    }
+    button {
+      padding: 15px;
+      font-size: 24px;
+      background: #ff9800;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background: #e65100;
+    }
+    #result {
+      margin-top: 20px;
+      font-size: 22px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>உயிர் எழுத்துக்கள் - ප්‍රණාක්ෂර </h1>
+  <p><h3>අකුරට හොඳම උච්චාරණය තෝරන්න<h3></p>
+
+  <div id="letter">அ</div>
+
+  <div class="options" id="options"></div>
+
+  <div id="result"></div>
+
+  <script>
+    const uyirLetters = [
+      { letter: "அ", sound: "අ" },
+      { letter: "ஆ", sound: "ආ" },
+      { letter: "இ", sound: "ඉ" },
+      { letter: "ஈ", sound: "ඊ" },
+      { letter: "உ", sound: "උ" },
+      { letter: "ஊ", sound: "ඌ" },
+      { letter: "எ", sound: "එ" },
+      { letter: "ஏ", sound: "ඒ" },
+      { letter: "ஐ", sound: "ඓ" },
+      { letter: "ஒ", sound: "ඔ" },
+      { letter: "ஓ", sound: "ඕ" },
+      { letter: "ஔ", sound: "ඖ" }
+    ];
+
+    let current;
+
+    function newQuestion() {
+      // Random letter
+      current = uyirLetters[Math.floor(Math.random() * uyirLetters.length)];
+      document.getElementById("letter").textContent = current.letter;
+
+      // Random options
+      let options = [current.sound];
+      while (options.length < 3) {
+        let random = uyirLetters[Math.floor(Math.random() * uyirLetters.length)].sound;
+        if (!options.includes(random)) {
+          options.push(random);
+        }
+      }
+      options.sort(() => Math.random() - 0.5);
+
+      // Show buttons
+      let html = "";
+      options.forEach(opt => {
+        html += `<button onclick="checkAnswer('${opt}')">${opt}</button>`;
+      });
+      document.getElementById("options").innerHTML = html;
+      document.getElementById("result").textContent = "";
+    }
+
+    function checkAnswer(answer) {
+      if (answer === current.sound) {
+        document.getElementById("result").textContent = "✅ හරි!";
+        setTimeout(newQuestion, 1000);
+      } else {
+        document.getElementById("result").textContent = "❌ නැවත උත්සාහ කරන්න";
+      }
+    }
+
+    // Start game
+    newQuestion();
+  </script>
+</body>
+</html>
